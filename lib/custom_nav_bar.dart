@@ -21,7 +21,7 @@ class CustomNavBar extends StatelessWidget {
       items: <Widget>[
         Icon(Icons.home, color: colorBg),
         Icon(Icons.favorite, color: colorBg),
-        Icon(Icons.add, color: colorBg),
+        Icon(Icons.music_note, color: colorBg),
         Icon(Icons.list, color: colorBg),
         Icon(Icons.person, color: colorBg),
       ],

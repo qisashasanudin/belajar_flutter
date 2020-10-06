@@ -1,3 +1,4 @@
+import 'package:belajar1/pages/page_home.dart';
 import 'package:belajar1/widgets/name_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,12 +15,18 @@ class LoginPage extends StatefulWidget {
   final Color colorBg;
   final Color colorAc;
 
+  static const String routeName = "/login";
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   var myText = "Hello World";
+  final formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   TextEditingController _nameController = TextEditingController();
 
   @override
@@ -43,29 +50,70 @@ class _LoginPageState extends State<LoginPage> {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
-        extendBodyBehindAppBar: true,
-        backgroundColor: widget.colorBg,
-        body: SafeArea(
-          top: false,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: NameCardWidget(
-                    myText: myText, nameController: _nameController),
+          backgroundColor: widget.colorBg,
+          body: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Image.asset(
+                "assets/wallpaper2.jpg",
+                fit: BoxFit.cover,
+                color: Colors.black.withOpacity(0.5),
+                colorBlendMode: BlendMode.darken,
               ),
-            ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: widget.colorAc,
-          child: Icon(Icons.send, color: widget.colorBg),
-          onPressed: () {
-            myText = _nameController.text;
-            setState(() {});
-          },
-        ),
-      ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: formKey,
+                      child: Card(
+                        color: widget.colorAc.withOpacity(0.7),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              TextFormField(
+                                controller: _usernameController,
+                                keyboardType: TextInputType.emailAddress,
+                                validator: (s) {},
+                                decoration: InputDecoration(
+                                  hintText: "Enter your email",
+                                  labelText: "Email",
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              TextFormField(
+                                controller: _passwordController,
+                                keyboardType: TextInputType.text,
+                                validator: (s) {},
+                                obscureText: true,
+                                decoration: InputDecoration(
+                                  hintText: "Enter password",
+                                  labelText: "Password",
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              RaisedButton(
+                                onPressed: () {
+                                  formKey.currentState.validate();
+                                  Navigator.pushNamed(
+                                      context, HomePage.routeName);
+                                },
+                                child: Text("Sign In"),
+                                color: widget.colorAc,
+                                textColor: widget.colorBg,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

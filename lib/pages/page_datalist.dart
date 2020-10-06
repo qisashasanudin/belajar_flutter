@@ -1,3 +1,4 @@
+import 'package:belajar1/custom_nav_bar.dart';
 import 'package:belajar1/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,8 @@ class DataListPage extends StatefulWidget {
 
   final Color colorBg;
   final Color colorAc;
+
+  static const String routeName = "/datalist";
 
   @override
   _DataListPageState createState() => _DataListPageState();
@@ -55,30 +58,33 @@ class _DataListPageState extends State<DataListPage> {
       ),
       child: Scaffold(
         //extendBodyBehindAppBar: true,
-        backgroundColor: widget.colorAc,
+        backgroundColor: widget.colorBg,
         appBar: AppBar(
           //elevation: 0,
           //backgroundColor: Colors.transparent,
-          title: Text("Images"),
+          title: Text("Data List"),
         ),
         drawer: AppDrawer(),
-        body: SafeArea(
-          top: false,
-          child: data != null
-              ? ListView.builder(
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(data[index]["title"]),
-                      subtitle: Text("ID: ${data[index]["id"]}"),
-                      leading: Image.network(data[index]["url"]),
-                    );
-                  },
-                  itemCount: data.length,
-                )
-              : Center(
-                  child: CircularProgressIndicator(),
-                ),
-        ),
+        body: data != null
+            ? ListView.builder(
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      data[index]["title"],
+                      style: TextStyle(color: widget.colorAc),
+                    ),
+                    subtitle: Text(
+                      "ID: ${data[index]["id"]}",
+                      style: TextStyle(color: widget.colorAc),
+                    ),
+                    leading: Image.network(data[index]["url"]),
+                  );
+                },
+                itemCount: data.length,
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: widget.colorAc,
           child: Icon(Icons.send, color: widget.colorBg),
@@ -87,6 +93,8 @@ class _DataListPageState extends State<DataListPage> {
             setState(() {});
           },
         ),
+        bottomNavigationBar:
+            CustomNavBar(colorAc: widget.colorAc, colorBg: widget.colorBg),
       ),
     );
   }

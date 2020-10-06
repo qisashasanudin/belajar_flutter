@@ -16,6 +16,8 @@ class HomePage extends StatefulWidget {
   final Color colorBg;
   final Color colorAc;
 
+  static const String routeName = "/home";
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -51,6 +53,13 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: Text("Home"),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.logout),
+                onPressed: () {
+                  Navigator.pop(context);
+                })
+          ],
         ),
         drawer: AppDrawer(),
         body: Container(
